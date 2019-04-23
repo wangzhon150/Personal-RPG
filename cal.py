@@ -24,7 +24,7 @@ def run_calendar() -> None:
             if event.type == pygame.QUIT:
                 return
             elif event.type == pygame.MOUSEBUTTONUP and \
-                    select_day(screen, event.button, event.pos, date_dict):
+                    select_day(event.button, event.pos, date_dict):
                 return
         pygame.display.flip()
 
@@ -57,7 +57,7 @@ def draw_calendar(screen: pygame.Surface, font: pygame.font.SysFont) \
     return date_dict
 
 
-def select_day(screen: pygame.Surface, button: int, pos: Tuple[int, int],
+def select_day(button: int, pos: Tuple[int, int],
                date_dict: Dict[Tuple[int, int, int],
                                Tuple[int, int, int, int]]) -> bool:
     if button == 1:
@@ -72,3 +72,4 @@ def select_day(screen: pygame.Surface, button: int, pos: Tuple[int, int],
 
 if __name__ == '__main__':
     run_calendar()
+    pygame.quit()
