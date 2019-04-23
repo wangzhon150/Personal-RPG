@@ -77,6 +77,7 @@ def add_to_log(date_: date, category: str, description: str) -> None:
 def draw_text(surface: pygame.Surface, text: str, colour: Tuple[int, int, int],
               rect: Tuple[int, int, int, int], font: pygame.font) -> \
         Tuple[Optional[str], int]:
+    """Adapted from https://www.pygame.org/wiki/TextWrap"""
     y = rect[1]
     line_spacing = -2
     lines = 0
