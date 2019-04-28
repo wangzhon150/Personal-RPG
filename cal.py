@@ -1,5 +1,6 @@
 import pygame
 import log
+import progress
 from typing import Dict, Tuple, Optional
 from datetime import date
 import calendar
@@ -11,22 +12,28 @@ TODAY_COLOUR = (100, 0, 0)
 DAY_COLOUR = (44, 44, 44)
 CURR_MONTH_COLOUR = (145, 133, 127)
 OTHER_MONTH_COLOUR = (96, 88, 84)
+BUTTON_COLOUR = (76, 74, 73)
+ICON_TEXT_COLOUR = (255, 255, 255)
 
 
 def run_calendar() -> None:
     pygame.init()
     screen = pygame.display.set_mode((800, 600))
     pygame.display.set_caption('Calendar')
+    pygame.draw.rect(screen, BG_COLOUR, (20, 20, 760, 560))
+    font = pygame.font.SysFont('CALISTO, CALISTOMT', 32)
+    date_dict = draw_calendar(screen, font)
     while True:
-        pygame.draw.rect(screen, BG_COLOUR, (20, 20, 760, 560))
-        font = pygame.font.SysFont('CALISTO, CALISTOMT', 32)
-        date_dict = draw_calendar(screen, font)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
             elif event.type == pygame.MOUSEBUTTONUP and \
                     select_day(event.button, event.pos, date_dict):
                 return
+            elif event.type == pygame.MOUSEBUTTONUP and \
+                    650 <= event.pos[0] <= 760 and \
+                    40 <= event.pos[1] <= 75:
+                return progress.run_progress()
         pygame.display.flip()
 
 
@@ -38,9 +45,13 @@ def draw_calendar(screen: pygame.Surface, font: pygame.font.SysFont) \
     x = 20
     y = 125
     large_font = pygame.font.SysFont('CALISTO, CALISTOMT', 54)
+    icon_font = pygame.font.SysFont('CALISTO, CALISTOMT', 28)
     month_surface = large_font.render(str(today.strftime('%B')), 1,
                                       TITLE_COLOUR)
     screen.blit(month_surface, (75, 40))
+    pygame.draw.rect(screen, BUTTON_COLOUR, (650, 40, 110, 35))
+    skills_surface = icon_font.render('Progress', 1, ICON_TEXT_COLOUR)
+    screen.blit(skills_surface, (654, 40))
     for item in c.itermonthdates(today.year, today.month):
         if item.month == today.month:
             pygame.draw.rect(screen, CURR_MONTH_COLOUR, (x, y, 100, 75))

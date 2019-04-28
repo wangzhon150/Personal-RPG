@@ -1,8 +1,7 @@
-from __future__ import annotations
 import pygame
 import cal
 import json
-from typing import Dict, Tuple, Optional, List
+from typing import Dict, Tuple
 from datetime import date
 
 LOG_BG_COLOUR = (68, 53, 46)
@@ -13,6 +12,7 @@ ICON_TEXT_COLOUR = (255, 255, 255)
 MASTER_LOG = 'master_log.json'
 
 # TODO: Error messages re: text being too long
+# TODO: Make same width as other windows?
 
 
 def run_log(day: Tuple[int, int, int]) -> None:
@@ -26,13 +26,14 @@ def run_log(day: Tuple[int, int, int]) -> None:
     text_font_height = text_font.size("Tg")[1]
     d = date(day[0], day[1], day[2])
     date_surface = title_font.render(str(day[2]) + ' ' + str(d.strftime('%B'))
-                                     + ' ' + str(day[0]), 1, LOG_TITLE_COLOUR)
+                                     + ' ' + str(day[0]) + ': Events', 1,
+                                     LOG_TITLE_COLOUR)
     screen.blit(date_surface, (30, 25))
     back_pos = (30, 540)
     pygame.draw.rect(screen, BUTTON_COLOUR,
                      (back_pos[0], back_pos[1], 90, 30))
     back_surface = icon_font.render('Return', 1, ICON_TEXT_COLOUR)
-    screen.blit(back_surface, back_pos)
+    screen.blit(back_surface, (33, 540))
     pos = create_page_buttons(screen, icon_font, True)
     master_log = import_master_log()
     if str(date(day[0], day[1], day[2])) in master_log:
@@ -52,8 +53,8 @@ def run_log(day: Tuple[int, int, int]) -> None:
             if event.type == pygame.QUIT:
                 return
             elif event.type == pygame.MOUSEBUTTONUP and \
-                    back_pos[0] <= event.pos[0] <= back_pos[0] + 100 and \
-                    back_pos[1] <= event.pos[1] <= back_pos[1] + 90:
+                    back_pos[0] <= event.pos[0] <= back_pos[0] + 90 and \
+                    back_pos[1] <= event.pos[1] <= back_pos[1] + 30:
                 return cal.run_calendar()
             elif event.type == pygame.MOUSEBUTTONUP and \
                     pos[0] <= event.pos[0] <= pos[0] + 30 and \
@@ -71,13 +72,14 @@ def run_log_next(day: Tuple[int, int, int]) -> None:
     icon_font = pygame.font.SysFont('CALISTO, CALISTOMT', 28)
     d = date(day[0], day[1], day[2])
     date_surface = title_font.render(str(day[2]) + ' ' + str(d.strftime('%B'))
-                                     + ' ' + str(day[0]), 1, LOG_TITLE_COLOUR)
+                                     + ' ' + str(day[0]) + ': Diary', 1,
+                                     LOG_TITLE_COLOUR)
     screen.blit(date_surface, (30, 25))
     back_pos = (30, 540)
     pygame.draw.rect(screen, BUTTON_COLOUR,
                      (back_pos[0], back_pos[1], 90, 30))
     back_surface = icon_font.render('Return', 1, ICON_TEXT_COLOUR)
-    screen.blit(back_surface, back_pos)
+    screen.blit(back_surface, (33, 540))
     pos = create_page_buttons(screen, icon_font, False)
     master_log = import_master_log()
     if str(date(day[0], day[1], day[2])) in master_log:
@@ -160,4 +162,3 @@ def draw_text(surface: pygame.Surface, text: str, colour: Tuple[int, int, int],
         y += font_height + line_spacing
         text = text[i:]
     return lines
-
