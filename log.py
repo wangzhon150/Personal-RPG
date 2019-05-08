@@ -20,9 +20,9 @@ def run_log(day: Tuple[int, int, int]) -> None:
     pygame.display.set_caption('Log')
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, LOG_BG_COLOUR, (20, 20, 460, 560))
-    title_font = pygame.font.SysFont('CALISTO, CALISTOMT', 30)
-    text_font = pygame.font.SysFont('CALISTO, CALISTOMT', 16)
-    icon_font = pygame.font.SysFont('CALISTO, CALISTOMT', 28)
+    title_font = pygame.font.Font('calist.ttf', 30)
+    text_font = pygame.font.Font('calist.ttf', 18)
+    icon_font = pygame.font.Font('calist.ttf', 28)
     text_font_height = text_font.size("Tg")[1]
     d = date(day[0], day[1], day[2])
     date_surface = title_font.render(str(day[2]) + ' ' + str(d.strftime('%B'))
@@ -42,7 +42,7 @@ def run_log(day: Tuple[int, int, int]) -> None:
         y = 70
         for event in event_dict:
             if event != '!!DIARY':
-                event_text = event.upper() + ': ' + event_dict[event]
+                event_text = event.upper() + '. ' + event_dict[event]
 
                 lines = draw_text(screen, event_text, LOG_TEXT_COLOUR,
                                   (x, y, 420, 420), text_font)
@@ -67,9 +67,9 @@ def run_log_next(day: Tuple[int, int, int]) -> None:
     pygame.display.set_caption('Log')
     screen.fill((0, 0, 0))
     pygame.draw.rect(screen, LOG_BG_COLOUR, (20, 20, 460, 560))
-    title_font = pygame.font.SysFont('CALISTO, CALISTOMT', 30)
-    text_font = pygame.font.SysFont('CALISTO, CALISTOMT', 16)
-    icon_font = pygame.font.SysFont('CALISTO, CALISTOMT', 28)
+    title_font = pygame.font.Font('calist.ttf', 30)
+    text_font = pygame.font.Font('calist.ttf', 18)
+    icon_font = pygame.font.Font('calist.ttf', 28)
     d = date(day[0], day[1], day[2])
     date_surface = title_font.render(str(day[2]) + ' ' + str(d.strftime('%B'))
                                      + ' ' + str(day[0]) + ': Diary', 1,
@@ -142,7 +142,7 @@ def add_to_log(date_: date, category: str, description: str) -> None:
 
 def draw_text(surface: pygame.Surface, text: str, colour: Tuple[int, int, int],
               rect: Tuple[int, int, int, int], font: pygame.font) -> int:
-    """Adapted from https://www.pygame.org/wiki/TextWrap
+    """Adapted from Pygame Wiki (https://www.pygame.org/wiki/TextWrap)
     """
     y = rect[1]
     line_spacing = -2

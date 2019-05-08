@@ -1,7 +1,7 @@
 import pygame
 import log
 import progress
-from typing import Dict, Tuple, Optional
+from typing import Dict, Tuple
 from datetime import date
 import calendar
 from calendar import Calendar
@@ -21,7 +21,7 @@ def run_calendar() -> None:
     screen = pygame.display.set_mode((800, 600))
     pygame.display.set_caption('Calendar')
     pygame.draw.rect(screen, BG_COLOUR, (20, 20, 760, 560))
-    font = pygame.font.SysFont('CALISTO, CALISTOMT', 32)
+    font = pygame.font.Font('calist.ttf', 32)
     date_dict = draw_calendar(screen, font)
     while True:
         for event in pygame.event.get():
@@ -44,8 +44,8 @@ def draw_calendar(screen: pygame.Surface, font: pygame.font.SysFont) \
     date_dict = {}
     x = 20
     y = 125
-    large_font = pygame.font.SysFont('CALISTO, CALISTOMT', 54)
-    icon_font = pygame.font.SysFont('CALISTO, CALISTOMT', 28)
+    large_font = pygame.font.Font('calist.ttf', 54)
+    icon_font = pygame.font.Font('calist.ttf', 28)
     month_surface = large_font.render(str(today.strftime('%B')), 1,
                                       TITLE_COLOUR)
     screen.blit(month_surface, (75, 40))
